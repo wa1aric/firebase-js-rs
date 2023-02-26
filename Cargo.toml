@@ -5,7 +5,6 @@ edition = "2021"
 authors = ["Valery Stepanov <etonomick@gmail.com>"]
 description = "Unofficial Wasm bindings for Firebase JS SDKs"
 license = "MIT OR Apache-2.0"
-license-file = "LICENSE.txt"
 keywords = ["firebase", "wasm", "bindings"]
 categories = ["wasm", "web-programming"]
 
