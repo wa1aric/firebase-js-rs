@@ -1,0 +1,12 @@
+[package]
+name = "sycamore-firebase-auth"
+version = "0.1.0"
+edition = "2021"
+authors = ["Valery Stepanov <etonomick@gmail.com>"]
+description = "Password authentication example with Firebase and Sycamore"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[dependencies]
+firebase-js-rs = { path = "../.." }
+sycamore = { git = "https://github.com/sycamore-rs/sycamore", rev= "ce74cb52f2f46ef285c10101b85a49e6bfbaa3f5", features = [ "suspense" ] }
