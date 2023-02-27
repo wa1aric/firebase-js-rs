@@ -43,7 +43,7 @@ fn main() {
         view! { cx,
             // Initialize Firebase
             let firebase_app = initialize_app(Config::initialize(
-            api_key, None, None, None, None, None, None,
+            "api_key", None, None, None, None, None, None,
             ));
             // Get reference to the auth service
             let auth = app.auth();
