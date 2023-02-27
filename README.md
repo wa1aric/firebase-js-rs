@@ -39,13 +39,13 @@ use sycamore::prelude::*;
 use firebase_js_rs::{app::initialize_app, Config};
 
 fn main() {
-    sycamore::render(|cx| {
-        view! { cx,
-            // Initialize Firebase
-            let firebase_app = initialize_app(Config::initialize(
+  sycamore::render(|cx| {
+    view! { cx,
+          // Initialize Firebase
+          let firebase_app = initialize_app(Config::initialize(
             "api_key", None, None, None, None, None, None,
             ));
-            // Get reference to the auth service
+          // Get reference to the auth service
             let auth = app.auth();
         }
     });
@@ -53,4 +53,24 @@ fn main() {
 
 ```
 
+### Create new user
 
+```rust
+let result = auth.create_user_with_email_and_password(email, password).await;
+```
+
+### Sign in user
+
+```rust
+let result = auth.sign_in_with_email_and_password(email, password).await;
+```
+
+### Observe authentication state
+
+```rust
+let callback = Closure::new(move |user: JsValue| {
+  // Get info about user
+});
+auth.on_auth_state_changed(&callback);
+callback.forget();
+```
