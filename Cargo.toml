@@ -1,12 +1,14 @@
 [package]
 name = "firebase-js-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Valery Stepanov <etonomick@gmail.com>"]
 description = "Unofficial Wasm bindings for Firebase JS SDKs"
 license = "MIT OR Apache-2.0"
 keywords = ["firebase", "wasm", "bindings"]
 categories = ["wasm", "web-programming"]
+readme = "README.md"
+repository = "https://github.com/wa1aric/firebase-js-rs/"
 
 [dependencies]
 wasm-bindgen = "0.2.84"

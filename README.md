@@ -17,7 +17,7 @@ cargo add firebase-js-rs
 or alternatively add the following line to your Cargo.toml:
 
 ```toml
-firebase-js-rs = "0.1.0"
+firebase-js-rs = "0.1.1"
 ```
 
 Then add project in the [Firebase console](https://console.firebase.google.com/?authuser=0) and install JS SDKs from the CDN.
