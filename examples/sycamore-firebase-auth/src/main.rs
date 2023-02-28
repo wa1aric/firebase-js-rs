@@ -43,6 +43,8 @@ fn App<G: Html>(cx: Scope) -> View<G> {
     let email = create_signal(cx, String::new());
     let password = create_signal(cx, String::new());
 
+    let database = use_context::<RcSignal<FirebaseApp>>(cx).get().database();
+
     view! { cx,
         h1 { "Sycamore Firebase Auth" }
         div {

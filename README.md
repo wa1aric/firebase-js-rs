@@ -74,3 +74,48 @@ let callback = Closure::new(move |user: JsValue| {
 auth.on_auth_state_changed(&callback);
 callback.forget();
 ```
+
+## Realtime Database
+
+### Initialize
+
+```rust
+let config = Config::initialize({
+  "api_key",
+  None,
+  None,
+  Some(String::from("project_id")),
+  None,
+  None,
+  None,
+});
+
+// Initialize Firebase
+let app = initialize_app(config);
+
+// Initialize Realtime Database
+let db = app.db();
+```
+
+### Create a new reference
+
+```rust
+let ref = db.ref(String::from("/"));
+```
+
+### Listen for value events
+
+```rust
+let callback = Closure::new(move |snapshot: Snapshot| {
+  web_sys::console::log_1(&snapshot.val());
+});
+r#ref.on(String::from("value"), &callback);
+callback.forget();
+```
+
+## Examples
+
+|Example|Description|
+|-|-|
+|[sycamore-firebase-auth](https://github.com/wa1aric/firebase-js-rs/tree/main/examples/sycamore-firebase-auth)|Basic Sycamore auth example|
+|[leptos-firebase-auth](https://github.com/wa1aric/firebase-js-rs/tree/main/examples/leptos-firebase-auth)|Email and password authentication with Leptos|
