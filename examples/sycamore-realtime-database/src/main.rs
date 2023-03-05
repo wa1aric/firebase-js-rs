@@ -1,5 +1,6 @@
 use firebase_js_rs::{app::initialize_app, database::Snapshot, Closure, Config};
-use sycamore::prelude::*;
+use sycamore::{futures::spawn_local_scoped, prelude::*};
+use web_sys::console::log_1;
 
 fn main() {
     let api_key = std::env!("API_KEY");
@@ -25,6 +26,14 @@ fn main() {
     sycamore::render(|cx| {
         view! {
             cx,
+            button(on:click = move |_| {
+                let ref_clone = r#ref.clone();
+                spawn_local_scoped(cx, async move {
+                    let res = ref_clone.get().await;
+                    let snapshot = Snapshot::from(res.unwrap());
+                    log_1(&snapshot.val());
+                });
+            }) { "Get" }
         }
     })
 }
