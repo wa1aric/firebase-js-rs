@@ -36,4 +36,7 @@ extern "C" {
 
     #[wasm_bindgen(method, catch, js_name = remove)]
     pub async fn remove(this: &Ref) -> Result<JsValue, JsValue>;
+
+    #[wasm_bindgen(method, js_name = push)]
+    pub fn push(this: &Ref) -> Ref;
 }
