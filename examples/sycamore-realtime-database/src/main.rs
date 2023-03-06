@@ -22,7 +22,7 @@ fn main() {
     let db = app.database();
 
     sycamore::render(|cx| {
-        let r#ref = create_rc_signal(db.r#ref(String::from("/")));
+        let r#ref = create_rc_signal(db.r#ref(String::from("/test")));
         let callback = Closure::new(move |snapshot: Snapshot| {
             web_sys::console::log_1(&snapshot.val());
         });
@@ -43,6 +43,11 @@ fn main() {
                     use_context::<RcSignal<Ref>>(cx).get().set(JsValue::NULL).await;
                 });
             }) { "Set" }
+            button(on:click = move |_| {
+                spawn_local_scoped(cx, async move {
+                    let _ = use_context::<RcSignal<Ref>>(cx).get().remove().await;
+                })
+            }) { "Remove" }
         }
     })
 }
