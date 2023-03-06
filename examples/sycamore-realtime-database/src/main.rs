@@ -22,11 +22,11 @@ fn main() {
     let db = app.database();
 
     sycamore::render(|cx| {
-        let r#ref = create_rc_signal(db.r#ref(String::from("/test")));
+        let r#ref = create_rc_signal(db.r#ref(String::from("/")));
         let callback = Closure::new(move |snapshot: Snapshot| {
             web_sys::console::log_1(&snapshot.val());
         });
-        r#ref.get().on(String::from("value"), &callback);
+        r#ref.get().once(firebase_js_rs::Event::Value, &callback);
         provide_context(cx, r#ref);
         callback.forget();
         view! {
@@ -40,7 +40,7 @@ fn main() {
             }) { "Get" }
             button(on:click = move |_| {
                 spawn_local_scoped(cx, async move {
-                    use_context::<RcSignal<Ref>>(cx).get().set(JsValue::NULL).await;
+                    let _ = use_context::<RcSignal<Ref>>(cx).get().set(JsValue::NULL).await;
                 });
             }) { "Set" }
             button(on:click = move |_| {

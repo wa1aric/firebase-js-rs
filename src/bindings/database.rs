@@ -1,4 +1,4 @@
-use crate::app::FirebaseApp;
+use crate::{app::FirebaseApp, event::Event};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -20,7 +20,10 @@ extern "C" {
     pub fn val(this: &Snapshot) -> JsValue;
 
     #[wasm_bindgen(method, js_name = on)]
-    pub fn on(this: &Ref, event: String, callback: &Closure<dyn FnMut(Snapshot)>);
+    pub fn on(this: &Ref, event: Event, callback: &Closure<dyn FnMut(Snapshot)>);
+
+    #[wasm_bindgen(method, js_name = once)]
+    pub fn once(this: &Ref, event: Event, callbacl: &Closure<dyn FnMut(Snapshot)>);
 
     #[wasm_bindgen(method, js_name = child)]
     pub fn child(this: &Ref, path: String) -> Ref;
