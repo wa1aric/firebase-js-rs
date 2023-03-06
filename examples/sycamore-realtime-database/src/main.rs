@@ -1,5 +1,9 @@
-use firebase_js_rs::{app::initialize_app, database::Snapshot, Closure, Config};
-use sycamore::{futures::spawn_local_scoped, prelude::*};
+use firebase_js_rs::{
+    app::initialize_app,
+    database::{Ref, Snapshot},
+    Closure, Config,
+};
+use sycamore::{futures::spawn_local_scoped, prelude::*, rt::JsValue};
 use web_sys::console::log_1;
 
 fn main() {
@@ -16,24 +20,29 @@ fn main() {
     ))
     .unwrap();
     let db = app.database();
-    let r#ref = db.r#ref(String::from("/"));
-    let callback = Closure::new(move |snapshot: Snapshot| {
-        web_sys::console::log_1(&snapshot.val());
-    });
-    r#ref.on(String::from("value"), &callback);
-    callback.forget();
 
     sycamore::render(|cx| {
+        let r#ref = create_rc_signal(db.r#ref(String::from("/")));
+        let callback = Closure::new(move |snapshot: Snapshot| {
+            web_sys::console::log_1(&snapshot.val());
+        });
+        r#ref.get().on(String::from("value"), &callback);
+        provide_context(cx, r#ref);
+        callback.forget();
         view! {
             cx,
             button(on:click = move |_| {
-                let ref_clone = r#ref.clone();
                 spawn_local_scoped(cx, async move {
-                    let res = ref_clone.get().await;
+                    let res = use_context::<RcSignal<Ref>>(cx).get().get().await;
                     let snapshot = Snapshot::from(res.unwrap());
                     log_1(&snapshot.val());
                 });
             }) { "Get" }
+            button(on:click = move |_| {
+                spawn_local_scoped(cx, async move {
+                    use_context::<RcSignal<Ref>>(cx).get().set(JsValue::NULL).await;
+                });
+            }) { "Set" }
         }
     })
 }

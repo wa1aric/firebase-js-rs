@@ -1,5 +1,5 @@
 use crate::app::FirebaseApp;
-use wasm_bindgen::{convert::IntoWasmAbi, prelude::*};
+use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
@@ -28,4 +28,6 @@ extern "C" {
     #[wasm_bindgen(method, catch, js_name = get)]
     pub async fn get(this: &Ref) -> Result<JsValue, JsValue>;
 
+    #[wasm_bindgen(method, catch, js_name = set)]
+    pub async fn set(this: &Ref, value: JsValue) -> Result<JsValue, JsValue>;
 }
