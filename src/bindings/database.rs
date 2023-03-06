@@ -30,4 +30,7 @@ extern "C" {
 
     #[wasm_bindgen(method, catch, js_name = set)]
     pub async fn set(this: &Ref, value: JsValue) -> Result<JsValue, JsValue>;
+
+    #[wasm_bindgen(method, catch, js_name = remove)]
+    pub async fn remove(this: &Ref) -> Result<JsValue, JsValue>;
 }
