@@ -109,7 +109,7 @@ let ref = db.ref(String::from("/"));
 let callback = Closure::new(move |snapshot: Snapshot| {
   web_sys::console::log_1(&snapshot.val());
 });
-r#ref.on(String::from("value"), &callback);
+r#ref.on(Event::Value, &callback);
 callback.forget();
 ```
 
